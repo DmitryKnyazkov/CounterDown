@@ -22,37 +22,42 @@ class MainActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.button)
         val slider: Slider = findViewById(R.id.slider)
 
-        val scope = CoroutineScope(Dispatchers.Main)
+        var thraedForCounter = ThraedForCounter()
 
-        fun counting() {
-            var job = scope.launch {
-
-                while (counter > 0) {
-                    delay(1000)
-                    counter--
-                    textCounter.setText(counter.toString())
-                }
-                slider.isEnabled = true
-            }
-        }
+//        fun counting() {
+//            var job = scope.launch {
+//
+//                while (counter > 0) {
+//                    delay(1000)
+//                    counter--
+//                    textCounter.setText(counter.toString())
+//                }
+//                slider.isEnabled = true
+//            }
+//        }
 
         fun setCounter(secund: Int) {
-            counter = secund
-            textCounter.setText(counter.toString())
+//            counter = secund
+            thraedForCounter.counter = secund
+
+            textCounter.setText(thraedForCounter.counter.toString())
         }
 
         slider.addOnChangeListener { slider, value, fromUser -> setCounter(value.toInt()) }
 
         button.setOnClickListener {
             if (button.text == "СТАРТ") {
+                thraedForCounter.startCoroutine()
+
                 slider.isEnabled = false
                 button.setText("СТОП")
-                counting()
+//                counting()
             }
             else {
+                thraedForCounter.stopCoroutine()
                 button.setText("СТАРТ")
                 slider.isEnabled = true
-                scope.cancel()
+//                scope.cancel()
             }
         }
 
