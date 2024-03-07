@@ -47,14 +47,14 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             if (button.text == "СТАРТ") {
-                thraedForCounter.startCoroutine()
+                thraedForCounter.startCoroutine(textCounter, slider, button, true)
 
                 slider.isEnabled = false
                 button.setText("СТОП")
 //                counting()
             }
             else {
-                thraedForCounter.stopCoroutine()
+                thraedForCounter.startCoroutine(textCounter, slider,  button, false)
                 button.setText("СТАРТ")
                 slider.isEnabled = true
 //                scope.cancel()
